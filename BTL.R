@@ -192,6 +192,45 @@ apply(is.na(CPUs_data),2,sum)
 
 str(CPUs_data) 
 
+## Kiem dinh trung binh 1 mau
+Vertical_Segment<-CPUs_data$Vertical_Segment;
+Processor_Base_Frequency<-CPUs_data$Processor_Base_Frequency;
+# kiểm tra mẫu
+shapiro.test(Processor_Base_Frequency[Vertical_Segment == "Mobile"])
+shapiro.test(Processor_Base_Frequency[Vertical_Segment == "Desktop"])
+shapiro.test(Processor_Base_Frequency[Vertical_Segment == "Embedded"])
+shapiro.test(Processor_Base_Frequency[Vertical_Segment == "Server"])
+
+
+# kiểm định 1 mẫu
+
+expected_mean_value <- 2
+wilcox.test(Processor_Base_Frequency[Vertical_Segment == "Mobile"], mu = expected_mean_value, alternative = "two.sided")
+
+expected_mean_value <- 3
+wilcox.test(Processor_Base_Frequency[Vertical_Segment == "Desktop"], mu = expected_mean_value, alternative = "two.sided")
+
+expected_mean_value <- 2
+wilcox.test(Processor_Base_Frequency[Vertical_Segment == "Embedded"], mu = expected_mean_value, alternative = "two.sided")
+
+expected_mean_value <- 2.5
+wilcox.test(Processor_Base_Frequency[Vertical_Segment == "Server"], mu = expected_mean_value, alternative = "two.sided")
+
+
+
+Mobile <- Processor_Base_Frequency[Vertical_Segment == "Mobile"]
+Desktop <- Processor_Base_Frequency[Vertical_Segment == "Desktop"]
+Embedded <- Processor_Base_Frequency[Vertical_Segment == "Embedded"]
+Server <- Processor_Base_Frequency[Vertical_Segment == "Server"]
+
+
+# lấy ra 1000 biến ngẫu nhiên Processor_Base_Frequency của Mobile và Embedded
+set.seed(123) # sử dụng để đặt seed cho generator số ngẫu nhiên trong R, có nghĩa là mọi lần chạy mã với seed giống nhau là 123 sẽ tạo ra các giá trị ngẫu nhiên giống nhau
+sample_Mobile <- sample(Mobile, 1000, replace = T)
+sample_Desktop <- sample(Desktop, 1000, replace = T)
+sample_Embedded <- sample(Embedded, 1000, replace = T)
+sample_Server <- sample(Server, 1000, replace = T)
+
 
 # LÀM RÕ DỮ LIỆU  #################### 
 
